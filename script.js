@@ -1,6 +1,13 @@
+let color="black";
+
 document.addEventListener("DOMContentLoaded", function(){
 createBoard(16);
-console.log("hi");
+
+let promptButton=document.querySelector("#prompt");
+promptButton.addEventListener("click", function(){
+    let size=getUserInput();
+    createBoard(size);
+})
 });
 
 function createBoard(size){
@@ -12,7 +19,43 @@ function createBoard(size){
     let numDivs=size*size;
     for (i=0; i<numDivs;i++){
         let div=document.createElement("div");
-        div.style.backgroundColor="lightblue";
+        div.addEventListener("mouseover", colorDiv);
         board.insertAdjacentElement("beforeend",div);
     }
+}
+
+function getUserInput(){
+    let input=prompt("Enter the size of the board:");
+    let message=document.querySelector("#message");
+    if (input == ""){
+        message.textContent="Please enter the number!"
+    }
+    else if (input <0 || input>100 ){
+        message.textContent="Enter the number between 0 and 100!"
+    }
+    else {
+        message.textContent="Let's play!"
+        return input;
+    }
+}
+
+function colorDiv(){
+    if (color=="random"){
+        this.style.backgroundColor=`hsl(${Math.random()*360}, 100%, 50%)`
+    }
+    else {
+        this.style.backgroundColor="black";
+    }
+
+}
+
+function setColor(colorChoice){
+     color=colorChoice;
+
+}
+
+function resetBoard(){
+    let divs=document.querySelectorAll("div");
+    divs.forEach((div) => div.style.backgroundColor="white");
+    
 }
