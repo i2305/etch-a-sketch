@@ -1,7 +1,22 @@
 let color="black";
+let click=false;
 
 document.addEventListener("DOMContentLoaded", function(){
 createBoard(16);
+
+document.querySelector("body").addEventListener("click", function(e){
+    if (e.target.tagName != "BUTTON"){
+        click = !click;
+        let draw=document.querySelector("#draw");
+        if (click){
+            draw.textContent="You are allowed to draw";
+        }
+        else {
+            draw.textContent="You are not allowed to draw";
+        }
+    }
+
+})
 
 let promptButton=document.querySelector("#prompt");
 promptButton.addEventListener("click", function(){
@@ -40,11 +55,13 @@ function getUserInput(){
 }
 
 function colorDiv(){
-    if (color=="random"){
+    if (click){
+        if (color=="random"){
         this.style.backgroundColor=`hsl(${Math.random()*360}, 100%, 50%)`
-    }
-    else {
+        }
+        else {
         this.style.backgroundColor="black";
+        }
     }
 
 }
